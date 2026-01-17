@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Stylesheet" href="ForYou.css">
+    <link rel="icon" type="image/png" href="../Graphics/Omori-PNG-Image.png">
     <title>A Little Something For You</title>
 
 </head>
 
 <body>
-    <button class= "return" onclick="location.href='../index.html'"><img class="Light" src="../Graphics/omori-lightbulb.gif"></button>
+    <button class="return" onclick="location.href='../index.html'"><img class="Light"
+            src="../Graphics/omori-lightbulb.gif"></button>
 
     <header>
         Gusto kita.
@@ -51,7 +53,25 @@
 
     <audio id="bg-audio" autoplay loop>
         <source src="../Soundtracks/OMORI OST - 005 By Your Side..mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
+
+    <script>
+        const audio = document.getElementById("bg-audio");
+
+        audio.play().catch(() => {
+
+            const startAudio = () => {
+                audio.play();
+
+                document.body.removeEventListener("click", startAudio);
+                document.body.removeEventListener("touchstart", startAudio);
+            };
+
+            document.body.addEventListener("click", startAudio);
+            document.body.addEventListener("touchstart", startAudio); // For mobile devices
+        });
+    </script>
 
 </body>
 
