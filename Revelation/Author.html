@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Author.css">
+    <link rel="icon" type="image/png" href="../Graphics/Omori-PNG-Image.png">
+    <title>A Little Something For You</title>
+</head>
+
+<body>
+    <img class="Light" src="../Graphics/omori-lightbulb.gif">
+
+    <header>
+        <p>Lastly Happy Valentines</p>
+        <p>/)/)
+        ( . .)
+        ( づ♡
+        </p>
+    </header>
+
+    <main>
+        <p>-Your Admirer-</p>
+        <p>Benedict</p>
+        <a href="../index.html" class="btn">RETURN?</a>
+    </main>
+
+    <footer>
+        <img src="../Graphics/Omori-PNG-Cutout.png">
+    </footer>
+
+
+    <audio id="bg-audio" loop>
+        <source src="../Soundtracks/OMORI OST - 165 A Home For Flowers (Sunflower).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const audio = document.getElementById("bg-audio");
+
+        audio.play().catch(() => {
+
+            const startAudio = () => {
+                audio.play();
+
+                document.body.removeEventListener("click", startAudio);
+                document.body.removeEventListener("touchstart", startAudio);
+            };
+
+            document.body.addEventListener("click", startAudio);
+            document.body.addEventListener("touchstart", startAudio); // For mobile devices
+        });
+    </script>
+</body>
+
+</html>
