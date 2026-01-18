@@ -4,52 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="Stylesheet" href="ForYou.css">
+    <link rel="stylesheet" href="ForYou.css">
     <link rel="icon" type="image/png" href="../Graphics/Omori-PNG-Image.png">
     <title>A Little Something For You</title>
+    <style>
+        /* Typing effect cursor */
+        #text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
 
+        @keyframes blink {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+            25%, 75% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <button class="return" onclick="location.href='../index.html'"><img class="Light"
-            src="../Graphics/omori-lightbulb.gif"></button>
+    <button class="return" onclick="location.href='../index.html'">
+        <img class="Light" src="../Graphics/omori-lightbulb.gif">
+    </button>
 
     <header>
         Gusto kita.
     </header>
 
     <main>
-        <p>
-            I’ve been meaning to say this for a while and kept thinking when or where should I tell you, but I never
-            really knew the right moment. So I thought I’d say it in my own way, through something I enjoy and making
-            this for you.
-        </p>
-
-        <p>
-            I like you. Not just because of the small things, but because of how you make me feel.
-            The way you talk when we're argued and laughed on silly things,
-            the way you smile that makes my heart melt and happy, and the way you unknowingly make ordinary moments feel
-            lighter and memorable every time.
-        </p>
-
-        <p>
-            There’s no pressure in this, and no expectations.
-            I just wanted you to know how I feel about you, honestly telling what you mean to me and sincerely telling
-            the truth.
-        </p>
-
-        <p>
-            Whatever you feelings may be, that's completely okay.
-            I’m just grateful to have been able to tell you the truth.
-        </p>
-
-        <p>
-            Thank you for being who you are, for the laughters we shared, small moments we cherished, and the joy you bring just by
-            being around. I treasure every memories we share and hope this gives a glimpse of how much I truly apprieciate you.
-        </p>
-
-        <a href="../Revelation/Author.html" class="btn">CONTINUE?</a>
-
+        <p id="text"></p>
+        <a href="../Revelation/Author.html" class="btn" style="display:none;" id="continueBtn">CONTINUE?</a>
     </main>
 
     <footer>
@@ -62,22 +49,58 @@
     </audio>
 
     <script>
+        // Paragraphs for typing effect
+        const paragraphs = [
+            `I’ve been meaning to say this for a while and kept thinking when or where should I tell you, but I never really knew the right moment. So I thought I’d say it in my own way, through something I enjoy and making this for you.`,
+            `I like you. Not just because of the small things, but because of how you make me feel. The way you talk when we're argued and laughed on silly things, the way you smile that makes my heart melt and happy, and the way you unknowingly make ordinary moments feel lighter and memorable every time.`,
+            `There’s no pressure in this, and no expectations. I just wanted you to know how I feel about you, honestly telling what you mean to me and sincerely telling the truth.`,
+            `Whatever your feelings may be, that's completely okay. I’m just grateful to have been able to tell you the truth.`,
+            `Thank you for being who you are, for the laughters we shared, small moments we cherished, and the joy you bring just by being around. I treasure every memory we share and hope this gives a glimpse of how much I truly appreciate you.`
+        ];
+
+        const textElement = document.getElementById("text");
+        const continueBtn = document.getElementById("continueBtn");
+
+        let paragraphIndex = 0;
+        let charIndex = 0;
+
+        function typeParagraph() {
+            if (paragraphIndex >= paragraphs.length) {
+                continueBtn.style.display = "inline-block"; // Show continue button
+                textElement.style.borderRight = "none"; // Remove cursor after typing
+                return;
+            }
+
+            const currentParagraph = paragraphs[paragraphIndex];
+            if (charIndex < currentParagraph.length) {
+                textElement.innerHTML += currentParagraph.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeParagraph, 45); // Typing speed
+            } else {
+                textElement.innerHTML += "<br><br>";
+                paragraphIndex++;
+                charIndex = 0;
+                setTimeout(typeParagraph, 700); // Delay before next paragraph
+            }
+        }
+
+        // Start typing after cursor blinks for 1.5 seconds
+        setTimeout(() => {
+            typeParagraph();
+        }, 2500); // 1500ms = 1.5 seconds
+
+        // Audio play fix for browsers
         const audio = document.getElementById("bg-audio");
-
         audio.play().catch(() => {
-
             const startAudio = () => {
                 audio.play();
-
                 document.body.removeEventListener("click", startAudio);
                 document.body.removeEventListener("touchstart", startAudio);
             };
-
             document.body.addEventListener("click", startAudio);
-            document.body.addEventListener("touchstart", startAudio); // For mobile devices
+            document.body.addEventListener("touchstart", startAudio);
         });
     </script>
-
 </body>
 
 </html>
