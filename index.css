@@ -1,5 +1,3 @@
-
-
 /* Reset */
 * {
     margin: 0;
@@ -29,6 +27,12 @@ header {
     border-bottom: 2px solid #fff;
     width: 100%;
     max-width: 800px;
+}
+
+
+h1 {
+    font-family: inherit; /* Use the same font as body */
+    font-weight: normal;  /* optional, to match other text */
 }
 
 main {
@@ -76,3 +80,18 @@ footer {
     animation: fadeIn 1.5s ease-in-out;
 }
 
+#locked-message {
+    margin-top: 100px;
+}
+
+#locked-message .Light{
+    position: absolute;
+    top: 10px;
+    left: 47.5%;
+    right: 50%;
+}
+
+#countdown {
+    font-size: 2rem;
+    margin-top: 20px;
+}

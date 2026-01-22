@@ -7,46 +7,123 @@
     <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/png" href="Graphics/Omori-PNG-Image.png">
     <title>A Little Something For You</title>
-</head>
 
 <body>
-    <img class="Light" src="Graphics/omori-lightbulb.gif">
 
-    <header>
-        If you are here, thankss it truly means alot to me
-    </header>
+    <div id="locked-message">
+        <img class="Light" src="Graphics/omori-lightbulb.gif" alt="Lightbulb">
 
-    <main>
-        <p>I just wanted to tell you some things in my own way :3 </p>
-        <a href="Confession/Foryou.html" class="btn">CONTINUE?</a>
-    </main>
+        <h1>This page will open on Febuary 14th </h1>
 
-    <footer>
-        -Your Admirer-
-    </footer>
+        <p> ∧,,,∧</p>
+        <p>(• ⩊ •)</p>
+        <p>|￣￣￣￣￣￣￣￣￣￣U U￣￣￣￣￣￣￣￣￣￣|</p>
+        <p>| Please come back on the right day.      |</p>
+        <p>￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣</p>
+        <p>Please come back on the right day.</p>
+        <div id="countdown"></div>
+        <audio id="locked-audio" loop>
+            <source src="Soundtracks/OMORI OST - 006 Let's Get Together Now!.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-    
-    <audio id="bg-audio" loop>
-        <source src="Soundtracks/OMORI OST - 001 Title.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- REAL CONTENT (Shown on or after Feb 14) -->
+    <div id="real-content">
+        <img class="Light" src="Graphics/omori-lightbulb.gif" alt="Lightbulb">
+
+        <header>
+            If you are here, thankss it truly means a lot to me
+        </header>
+
+        <main>
+            <p>I just wanted to tell you some things in my own way :3</p>
+            <a href="Confession/Foryou.html" class="btn">CONTINUE?</a>
+        </main>
+
+        <footer>
+            -Your Admirer-
+        </footer>
+
+        <audio id="bg-audio" loop>
+            <source src="Soundtracks/OMORI OST - 001 Title.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <script>
-        const audio = document.getElementById("bg-audio");
+        // =========================
+        // CONFIGURE TARGET DATE
+        // =========================
+        const targetDate = new Date(2026, 1, 14); // Feb 14, 2026
+        targetDate.setHours(0, 0, 0, 0);
 
-        audio.play().catch(() => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-            const startAudio = () => {
-                audio.play();
+        const lockedMessage = document.getElementById("locked-message");
+        const countdownEl = document.getElementById("countdown");
+        const realContent = document.getElementById("real-content");
+        const lockedAudio = document.getElementById("locked-audio");
+        const bgAudio = document.getElementById("bg-audio");
 
-                document.body.removeEventListener("click", startAudio);
-                document.body.removeEventListener("touchstart", startAudio);
-            };
+        // HELPER: Start fade-in animation
+        function fadeInContent() {
+            realContent.classList.add("fade-in");
+        }
 
-            document.body.addEventListener("click", startAudio);
-            document.body.addEventListener("touchstart", startAudio); // For mobile devices
-        });
+        // =========================
+        // LOCKED PAGE
+        // =========================
+        if (today < targetDate) {
+            lockedMessage.style.display = "block";
+            realContent.style.display = "none";
+
+            // Play locked audio
+            lockedAudio.play().catch(() => {
+                document.body.addEventListener("click", () => lockedAudio.play());
+                document.body.addEventListener("touchstart", () => lockedAudio.play());
+            });
+
+            // Countdown timer
+            const countdownInterval = setInterval(() => {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    clearInterval(countdownInterval);
+                    location.reload(); // Reload page to unlock
+                } else {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+
+                    countdownEl.textContent = `Opens in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }, 1000);
+
+        } else {
+            // =========================
+            // UNLOCKED PAGE
+            // =========================
+            lockedMessage.style.display = "none";
+            realContent.style.display = "block";
+
+            // Fade-in animation
+            setTimeout(fadeInContent, 100);
+
+            // Play background audio
+            bgAudio.play().catch(() => {
+                const startAudio = () => {
+                    bgAudio.play();
+                    document.body.removeEventListener("click", startAudio);
+                    document.body.removeEventListener("touchstart", startAudio);
+                };
+                document.body.addEventListener("click", startAudio);
+                document.body.addEventListener("touchstart", startAudio);
+            });
+        }
     </script>
+
 </body>
 
 </html>
