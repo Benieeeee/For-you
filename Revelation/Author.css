@@ -80,3 +80,21 @@ footer {
     animation: fadeIn 1.5s ease-in-out;
 }
 
+.fade-text {
+    opacity: 0;                /* Start hidden */
+    transform: translateY(10px); /* Optional: slide up effect */
+    animation: fadeIn 2s forwards; /* 2 seconds fade-in */
+}
+
+.fade-text.delay {
+    animation-delay: 2s;       /* Start after 2 seconds */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
